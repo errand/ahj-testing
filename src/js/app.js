@@ -6,5 +6,3 @@ validator.bindToDOM(document.querySelector('#cards-container'));
 
 const validatorCtrl = new CardsValidatorController(validator);
 validatorCtrl.init();
-
-

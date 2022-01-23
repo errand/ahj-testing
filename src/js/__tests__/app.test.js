@@ -5,7 +5,6 @@
 import CardsValidator from '../CardsValidator';
 import CardsValidatorController from '../CardsValidatorController';
 
-
 const div = document.createElement('div');
 div.classList.add('cards-container');
 document.body.appendChild(div);
