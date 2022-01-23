@@ -1,8 +1,10 @@
-import GamePlay from './GamePlay';
-import GameController from './GameController';
+import CardsValidator from './CardsValidator';
+import CardsValidatorController from './CardsValidatorController';
 
-const gamePlay = new GamePlay();
-gamePlay.bindToDOM(document.querySelector('#game-container'));
+const validator = new CardsValidator();
+validator.bindToDOM(document.querySelector('#cards-container'));
 
-const gameCtrl = new GameController(gamePlay);
-gameCtrl.init();
+const validatorCtrl = new CardsValidatorController(validator);
+validatorCtrl.init();
+
+
