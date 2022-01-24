@@ -7,6 +7,7 @@ export default class CardsValidatorController {
   init() {
     this.cardsValidator.checkBinding();
     this.cardsValidator.addInputListener(this.validateCard.bind(this));
+    this.cardsValidator.addClickListener(this.validateCard.bind(this));
   }
 
   /**
@@ -21,10 +22,17 @@ export default class CardsValidatorController {
       const card = this.cardsValidator.container.querySelector(`.${paymentSystem}`);
       card.classList.add('active');
     }
+
+    if (this.cardsValidator.luhnAlgorithm(value)) {
+      this.cardsValidator.form.classList.add('valid');
+    } else {
+      this.cardsValidator.form.classList.add('invalid');
+    }
   }
 
   disableActiveCards() {
-    console.log(this.cards);
+    this.cardsValidator.form.classList.remove('valid');
+    this.cardsValidator.form.classList.remove('invalid');
     this.cards.forEach(el => el.classList.remove('active'));
   }
 }

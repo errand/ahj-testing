@@ -1,6 +1,7 @@
 export default class CardsValidator {
   constructor() {
     this.container = null;
+    this.form = null;
     this.formInput = null;
     this.formButton = null;
     this.cards = null;
@@ -16,6 +17,7 @@ export default class CardsValidator {
       electron: /^(4026|417500|4405|4508|4844|4913|4917)\d+$/,
     };
     this.inputListeners = [];
+    this.clickListeners = [];
   }
 
   bindToDOM(container) {
@@ -23,10 +25,12 @@ export default class CardsValidator {
       throw new Error('container is not HTMLElement');
     }
     this.container = container;
+    this.form = this.container.querySelector('#cardsValidationForm');
     this.formInput = this.container.querySelector('#card_number');
     this.formButton = this.container.querySelector('#submitform');
     this.cards = Array.from(this.container.querySelector('.cards').children);
     this.formInput.addEventListener('input', event => this.onInput(event));
+    this.formButton.addEventListener('click', event => this.onClick(event));
   }
 
   checkBinding() {
@@ -43,20 +47,22 @@ export default class CardsValidator {
    */
   // eslint-disable-next-line class-methods-use-this
   luhnAlgorithm(str) {
-    let ch = 0;
-    const num = String(str).replace(/\D/g, '');
-    const isOdd = num.length % 2 !== 0;
+    if (str.length > 7 && str.length < 20) {
+      let ch = 0;
+      const num = String(str).replace(/\D/g, '');
+      const isOdd = num.length % 2 !== 0;
 
-    if (num === '') return false;
+      if (num === '') return false;
 
-    for (let i = 0; i < num.length; i += 1) {
-      let n = parseInt(num[i], 10);
+      for (let i = 0; i < num.length; i += 1) {
+        let n = parseInt(num[i], 10);
 
-      // eslint-disable-next-line no-bitwise,no-cond-assign
-      ch += (isOdd | 0) === (i % 2) && (n *= 2) > 9 ? (n - 9) : n;
+        // eslint-disable-next-line no-bitwise,no-cond-assign
+        ch += (isOdd | 0) === (i % 2) && (n *= 2) > 9 ? (n - 9) : n;
+      }
+
+      return (ch % 10) === 0;
     }
-
-    return (ch % 10) === 0;
   }
 
   /**
@@ -85,14 +91,12 @@ export default class CardsValidator {
           return key;
         }
       }
-    } else {
-      throw new Error('Card number should contain only digits, (), - or spaces');
     }
     return false;
   }
 
   /**
-   * Add listener to "New Game" button click
+   * Add listener to input
    *
    * @param callback
    */
@@ -103,5 +107,20 @@ export default class CardsValidator {
   onInput(event) {
     const input = this.formInput.value;
     this.inputListeners.forEach(o => o.call(null, input));
+  }
+
+  /**
+   * Add listener to button click
+   *
+   * @param callback
+   */
+  addClickListener(callback) {
+    this.clickListeners.push(callback);
+  }
+
+  onClick(event) {
+    event.preventDefault();
+    const input = this.formInput.value;
+    this.clickListeners.forEach(o => o.call(null, input));
   }
 }

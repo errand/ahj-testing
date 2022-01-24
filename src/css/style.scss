@@ -5,6 +5,32 @@ html, body {
 body {
   background: #000;
   font-size: 16px;
+  padding: 2rem;
+}
+
+*{
+  transition: all 0.33s 0.2s ease-in-out;
+}
+
+#cardsValidationForm {
+  display: inline-flex;
+  .form-group {
+    display: flex;
+  }
+
+  input, button {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid transparent;
+    outline: none;
+  }
+
+  &.invalid {
+    box-shadow: 0 0 10px 5px #f00;
+  }
+
+  &.valid {
+    box-shadow: 0 0 10px 5px #0f0;
+  }
 }
 
 .cards {
@@ -23,12 +49,10 @@ body {
     background-size: 39px;
     background-repeat: no-repeat;
     background-position-y: center;
-    transition: all 0.33s 0.2s ease-in-out;
 
     &.active {
       opacity:1;
       filter: grayscale(0);
-      transition: all 0.33s 0.2s ease-in-out;
     }
 
     &.mir{
@@ -66,12 +90,6 @@ body {
     &.diners{
       background-image:url(../img/diners.svg)
     }
-  }
-}
-
-.form-inline {
-  .form-group {
-    display: flex;
   }
 }
 
