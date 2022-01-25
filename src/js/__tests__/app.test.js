@@ -5,12 +5,13 @@
 import CardsValidator from '../CardsValidator';
 import CardsValidatorController from '../CardsValidatorController';
 
-const div = document.createElement('div');
-div.classList.add('cards-container');
-document.body.appendChild(div);
+
 
 /* eslint-disable quotes */
 test('Binding to DOM', () => {
+  const div = document.createElement('div');
+  div.classList.add('cards-container');
+  document.body.appendChild(div);
   const consoleSpy = jest.spyOn(console, 'log');
   const validator = new CardsValidator();
   validator.bindToDOM(document.querySelector('.cards-container'));
