@@ -1,6 +1,9 @@
 const { merge } = require('webpack-merge');
-const common = require('./webpack.common');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const path = require('path');
+const common = require('./webpack.common');
+
 module.exports = merge(common, {
   mode: 'production',
   devtool: 'source-map',
@@ -8,4 +11,13 @@ module.exports = merge(common, {
     minimize: true,
     minimizer: [new CssMinimizerPlugin({}), '...'],
   },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'licence.txt'),
+        },
+      ],
+    }),
+  ],
 });
