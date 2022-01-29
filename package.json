@@ -9,7 +9,8 @@
     "lint": "eslint src/js",
     "test": "jest",
     "coverage": "jest --coverage",
-    "doc": "jsdoc -c jsdoc.conf.json"
+    "doc": "jsdoc -c jsdoc.conf.json",
+    "e2e":"jest --testPathPattern=./e2e/ --runInBand"
   },
   "author": "Aleksandr Shatskih",
   "license": "ISC",
